@@ -1,7 +1,19 @@
 import axios from 'axios'
 
+// Utiliser l'URL de l'API depuis les variables d'environnement en production
+// En développement, utiliser le proxy Vite (/api/v1)
+// En production, utiliser l'URL complète de Railway
+const getBaseURL = () => {
+  // Si VITE_API_URL est définie (production), l'utiliser
+  if (import.meta.env.VITE_API_URL) {
+    return `${import.meta.env.VITE_API_URL}/api/v1`
+  }
+  // Sinon, utiliser le proxy local (développement)
+  return '/api/v1'
+}
+
 const apiClient = axios.create({
-  baseURL: '/api/v1',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
