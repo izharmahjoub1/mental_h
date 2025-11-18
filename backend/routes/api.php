@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\QuestionnaireController;
 use App\Http\Controllers\Api\SensorReadingController;
+use App\Http\Controllers\Api\SetupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     // Authentification
     Route::post('/auth/login', [AuthController::class, 'login']);
+    
+    // Setup (pour l'initialisation)
+    Route::get('/setup/health', [SetupController::class, 'health']);
+    Route::post('/setup/migrate', [SetupController::class, 'migrate']);
+    Route::post('/setup/users', [SetupController::class, 'createUsers']);
     
     // Endpoint IoT (peut nécessiter un token API spécifique)
     Route::post('/sensor-readings', [SensorReadingController::class, 'store']);
